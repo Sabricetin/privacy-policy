@@ -1,12 +1,824 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-lang="en">
 <head>
-  <title>DreamVision</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0418" />
+  <title>DreamVision — Support</title>
+  <meta name="description" content="Get help with DreamVision — AI-powered dream visualization. Contact support, browse FAQ, manage subscriptions." />
+
+  <!-- Cormorant Garamond + Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ------------------------------------------------------------------
+       Design tokens
+       ------------------------------------------------------------------ */
+    :root {
+      --bg-deep: #050210;
+      --bg-mid:  #0a0418;
+      --bg-veil: #140830;
+
+      --purple-900: #1a0938;
+      --purple-700: #3a1875;
+      --purple-500: #6b3fc2;
+      --purple-300: #a982f0;
+
+      --gold-600: #b8860b;
+      --gold-500: #d4a94f;
+      --gold-400: #e8c571;
+      --gold-300: #f4dea0;
+
+      --star-glow: rgba(232, 197, 113, 0.9);
+
+      --text-primary:   rgba(245, 235, 220, 0.96);
+      --text-secondary: rgba(220, 210, 200, 0.72);
+      --text-muted:     rgba(200, 190, 185, 0.50);
+
+      --glass-bg:     rgba(30, 15, 55, 0.35);
+      --glass-border: rgba(232, 197, 113, 0.18);
+      --glass-hover:  rgba(232, 197, 113, 0.32);
+
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+
+      --display: "Cormorant Garamond", "Times New Roman", serif;
+      --body:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* ------------------------------------------------------------------
+       Reset & base
+       ------------------------------------------------------------------ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      color: var(--text-primary);
+      background: var(--bg-deep);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ------------------------------------------------------------------
+       Cosmic background — layered gradient + stars + aurora
+       ------------------------------------------------------------------ */
+    .cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(107, 63, 194, 0.35), transparent 60%),
+        radial-gradient(ellipse 70% 50% at 85% 40%, rgba(184, 134, 11, 0.12), transparent 55%),
+        radial-gradient(ellipse 100% 70% at 50% 100%, rgba(58, 24, 117, 0.50), transparent 60%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 40%, var(--bg-veil) 100%);
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--star-glow);
+      border-radius: 50%;
+      box-shadow: 0 0 6px 1px var(--star-glow);
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50%      { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Grain overlay — very subtle texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
+    }
+
+    /* ------------------------------------------------------------------
+       Language toggle — fixed top right
+       ------------------------------------------------------------------ */
+    .lang-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      gap: 2px;
+      padding: 4px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .lang-toggle button {
+      padding: 8px 16px;
+      font-family: var(--body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lang-toggle button.active {
+      color: var(--bg-deep);
+      background: linear-gradient(135deg, var(--gold-400), var(--gold-300));
+      box-shadow: 0 2px 8px rgba(232, 197, 113, 0.3);
+    }
+
+    .lang-toggle button:not(.active):hover {
+      color: var(--gold-300);
+    }
+
+    /* ------------------------------------------------------------------
+       Layout
+       ------------------------------------------------------------------ */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    /* ------------------------------------------------------------------
+       Hero — centered, emblem + elegant title
+       ------------------------------------------------------------------ */
+    .hero {
+      text-align: center;
+      margin-bottom: 72px;
+      animation: fadeUp 1s ease-out;
+    }
+
+    .emblem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 76px;
+      height: 76px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--gold-400), var(--gold-600) 70%);
+      box-shadow:
+        0 0 40px rgba(232, 197, 113, 0.4),
+        inset 0 0 20px rgba(10, 4, 24, 0.3);
+      position: relative;
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    .emblem::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      opacity: 0.6;
+    }
+
+    .emblem svg { width: 38px; height: 38px; color: var(--bg-deep); }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1);    box-shadow: 0 0 40px rgba(232, 197, 113, 0.4), inset 0 0 20px rgba(10, 4, 24, 0.3); }
+      50%      { transform: scale(1.04); box-shadow: 0 0 60px rgba(232, 197, 113, 0.6), inset 0 0 20px rgba(10, 4, 24, 0.3); }
+    }
+
+    .eyebrow {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gold-400);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold-300);
+      font-weight: 400;
+    }
+
+    .hero-lede {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(1.15rem, 2vw, 1.35rem);
+      font-style: italic;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    /* ------------------------------------------------------------------
+       Section headings
+       ------------------------------------------------------------------ */
+    section { margin-bottom: 56px; }
+
+    .section-title {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold-400), transparent);
+      flex-shrink: 0;
+      transform: translateY(-8px);
+    }
+
+    .section-subtitle {
+      font-family: var(--body);
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-left: 48px;
+      margin-bottom: 24px;
+    }
+
+    /* ------------------------------------------------------------------
+       Contact card — featured, hero-adjacent
+       ------------------------------------------------------------------ */
+    .contact-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+      opacity: 0.6;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+      .contact-card  { padding: 28px 24px; }
+    }
+
+    .contact-item .label {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-400);
+      margin-bottom: 10px;
+    }
+
+    .contact-item .value {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .contact-item a {
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-600);
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: var(--gold-300);
+      border-bottom-color: var(--gold-300);
+    }
+
+    .contact-note {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(232, 197, 113, 0.1);
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      font-family: var(--display);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* ------------------------------------------------------------------
+       FAQ — expandable, refined
+       ------------------------------------------------------------------ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    details.faq-item {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    details.faq-item[open] {
+      border-color: var(--glass-hover);
+      background: rgba(30, 15, 55, 0.5);
+    }
+
+    details.faq-item summary {
+      padding: 22px 28px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    details.faq-item summary:hover { color: var(--gold-300); }
+
+    details.faq-item summary::-webkit-details-marker { display: none; }
+
+    details.faq-item summary::after {
+      content: "+";
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--gold-400);
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    details.faq-item[open] summary::after {
+      content: "−";
+      color: var(--gold-300);
+    }
+
+    .faq-answer {
+      padding: 0 28px 24px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .faq-answer p + p { margin-top: 12px; }
+
+    .faq-answer a {
+      color: var(--gold-300);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-600);
+    }
+
+    .faq-answer a:hover { color: var(--gold-400); }
+
+    @media (max-width: 640px) {
+      details.faq-item summary { padding: 18px 22px; font-size: 16px; }
+      .faq-answer { padding: 0 22px 20px; font-size: 14px; }
+    }
+
+    /* ------------------------------------------------------------------
+       Quick links — subscription/account management
+       ------------------------------------------------------------------ */
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .quick-link {
+      display: block;
+      padding: 24px 26px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .quick-link:hover {
+      border-color: var(--glass-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .quick-link .ql-label {
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-400);
+      margin-bottom: 8px;
+    }
+
+    .quick-link .ql-title {
+      font-family: var(--display);
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .quick-link .ql-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ------------------------------------------------------------------
+       Footer
+       ------------------------------------------------------------------ */
+    footer {
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(232, 197, 113, 0.1);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-links a {
+      font-family: var(--body);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--gold-300); }
+
+    .footer-mark {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ------------------------------------------------------------------
+       Animations
+       ------------------------------------------------------------------ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      animation: fadeUp 0.8s ease-out backwards;
+    }
+
+    section:nth-of-type(1) { animation-delay: 0.1s; }
+    section:nth-of-type(2) { animation-delay: 0.2s; }
+    section:nth-of-type(3) { animation-delay: 0.3s; }
+    section:nth-of-type(4) { animation-delay: 0.4s; }
+
+    /* ------------------------------------------------------------------
+       Language switching — show/hide by [data-lang]
+       ------------------------------------------------------------------ */
+    [data-i18n-tr], [data-i18n-en] { display: none; }
+    html[data-lang="en"] [data-i18n-en] { display: revert; }
+    html[data-lang="tr"] [data-i18n-tr] { display: revert; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .emblem, .stars span { animation: none !important; }
+    }
+  </style>
 </head>
 <body>
-  <h1>DreamVision</h1>
 
-  <a href="privacy-policy.html">Privacy Policy</a><br><br>
-  <a href="terms-conditions.html">Terms & Conditions</a>
+  <!-- ───────────────────────── Cosmic background ───────────────────────── -->
+  <div class="cosmos" aria-hidden="true"></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <!-- ───────────────────────── Language toggle ───────────────────────── -->
+  <div class="lang-toggle" role="tablist" aria-label="Language selector">
+    <button type="button" data-set-lang="en" class="active" role="tab" aria-selected="true">EN</button>
+    <button type="button" data-set-lang="tr" role="tab" aria-selected="false">TR</button>
+  </div>
+
+  <!-- ───────────────────────── Main content ───────────────────────── -->
+  <main class="container">
+
+    <!-- ─── HERO ─── -->
+    <header class="hero">
+      <div class="emblem" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+          <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none" />
+        </svg>
+      </div>
+
+      <div class="eyebrow" data-i18n-en>Dream Vision Support</div>
+      <div class="eyebrow" data-i18n-tr>Dream Vision Destek</div>
+
+      <h1 data-i18n-en>How can we <em>help</em>?</h1>
+      <h1 data-i18n-tr>Size nasıl <em>yardım</em> edebiliriz?</h1>
+
+      <p class="hero-lede" data-i18n-en>
+        We're here to make sure your journey through dreams is smooth, clear, and wondrous.
+      </p>
+      <p class="hero-lede" data-i18n-tr>
+        Rüya yolculuğunuzun akıcı, net ve büyülü geçmesi için buradayız.
+      </p>
+    </header>
+
+    <!-- ─── CONTACT ─── -->
+    <section id="contact">
+      <h2 class="section-title" data-i18n-en>Contact us</h2>
+      <h2 class="section-title" data-i18n-tr>Bize ulaşın</h2>
+      <p class="section-subtitle" data-i18n-en>Direct line to the DreamVision team.</p>
+      <p class="section-subtitle" data-i18n-tr>DreamVision ekibiyle doğrudan iletişim.</p>
+
+      <div class="contact-card">
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="label" data-i18n-en>Email</div>
+            <div class="label" data-i18n-tr>E-posta</div>
+            <div class="value">
+              <a href="mailto:supportdreamvisionapp@gmail.com">supportdreamvisionapp@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="label" data-i18n-en>Response time</div>
+            <div class="label" data-i18n-tr>Yanıt süresi</div>
+            <div class="value" data-i18n-en>Within 48 hours</div>
+            <div class="value" data-i18n-tr>48 saat içinde</div>
+          </div>
+        </div>
+
+        <p class="contact-note" data-i18n-en>
+          When writing, please include your device model, iOS version, and a short description of what you were doing when the issue occurred. The more we know, the faster we can help.
+        </p>
+        <p class="contact-note" data-i18n-tr>
+          Bize yazarken lütfen cihaz modelinizi, iOS sürümünüzü ve sorunun ne zaman ortaya çıktığına dair kısa bir açıklama ekleyin. Ne kadar çok bilirsek, o kadar hızlı yardımcı olabiliriz.
+        </p>
+      </div>
+    </section>
+
+    <!-- ─── FAQ ─── -->
+    <section id="faq">
+      <h2 class="section-title" data-i18n-en>Frequently asked</h2>
+      <h2 class="section-title" data-i18n-tr>Sıkça sorulanlar</h2>
+      <p class="section-subtitle" data-i18n-en>Answers to the questions we hear most often.</p>
+      <p class="section-subtitle" data-i18n-tr>En sık karşılaştığımız soruların yanıtları.</p>
+
+      <div class="faq-list">
+
+        <!-- FAQ 1 — Generation failed, credits -->
+        <details class="faq-item">
+          <summary data-i18n-en>My generation failed — will I lose my credits?</summary>
+          <summary data-i18n-tr>Oluşturma başarısız oldu — kredim kaybolur mu?</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>No. If a generation fails on our side, your credits are automatically refunded within a few minutes. If you notice credits are still missing after an hour, please contact us with the date and time of the attempt.</p>
+            <p data-i18n-tr>Hayır. Eğer oluşturma bizim tarafımızda başarısız olursa, krediniz birkaç dakika içinde otomatik olarak iade edilir. Bir saat sonra hâlâ eksik olduğunu fark ederseniz, lütfen denemenin tarih ve saatiyle birlikte bize ulaşın.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 2 — Manage / cancel subscription -->
+        <details class="faq-item">
+          <summary data-i18n-en>How do I manage or cancel my subscription?</summary>
+          <summary data-i18n-tr>Aboneliğimi nasıl yönetirim veya iptal ederim?</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>All subscriptions are handled by Apple. Open the <strong>Settings</strong> app on your iPhone → tap your <strong>name</strong> at the top → <strong>Subscriptions</strong> → select <strong>DreamVision</strong>. From there you can change plan, cancel, or renew.</p>
+            <p data-i18n-en>You can also visit <a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener">apps.apple.com/account/subscriptions</a>.</p>
+            <p data-i18n-tr>Tüm abonelikler Apple tarafından yönetilir. iPhone'unuzda <strong>Ayarlar</strong> uygulamasını açın → en üstte <strong>adınıza</strong> dokunun → <strong>Abonelikler</strong> → <strong>DreamVision</strong>'ı seçin. Buradan planınızı değiştirebilir, iptal edebilir veya yenileyebilirsiniz.</p>
+            <p data-i18n-tr><a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener">apps.apple.com/account/subscriptions</a> adresini de ziyaret edebilirsiniz.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 3 — Refunds -->
+        <details class="faq-item">
+          <summary data-i18n-en>Can I get a refund?</summary>
+          <summary data-i18n-tr>İade alabilir miyim?</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>Refunds for in-app purchases and subscriptions are processed by Apple, not DreamVision. You can request a refund at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>. If your issue is technical (a failed generation, a billing mistake on our end), please write to us first — we'll do our best to resolve it directly.</p>
+            <p data-i18n-tr>Uygulama içi satın almalar ve abonelikler için iadeler DreamVision tarafından değil, Apple tarafından işlenir. <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a> adresinden iade talep edebilirsiniz. Sorunuz teknik bir sorunsa (başarısız oluşturma, bizim tarafımızdaki faturalandırma hatası), lütfen önce bize yazın — elimizden gelenin en iyisini yapıp doğrudan çözmeye çalışırız.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 4 — Restore purchases -->
+        <details class="faq-item">
+          <summary data-i18n-en>I bought credits but they're not showing up</summary>
+          <summary data-i18n-tr>Kredi satın aldım ama görünmüyor</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>Open DreamVision → <strong>Settings</strong> → tap <strong>Restore Purchases</strong>. This syncs your account with Apple's records. If credits still don't appear after a minute, close and reopen the app. Still no luck? Write to us with the email address on your Apple ID and the approximate time of purchase.</p>
+            <p data-i18n-tr>DreamVision'ı açın → <strong>Ayarlar</strong> → <strong>Satın Almaları Geri Yükle</strong>'ye dokunun. Bu, hesabınızı Apple'ın kayıtlarıyla senkronize eder. Bir dakika sonra krediler hâlâ görünmüyorsa, uygulamayı kapatıp yeniden açın. Hâlâ bir şey olmuyorsa, Apple ID'nizdeki e-posta adresi ve yaklaşık satın alma saatiyle birlikte bize yazın.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 5 — Account deletion / privacy -->
+        <details class="faq-item">
+          <summary data-i18n-en>How do I delete my account and data?</summary>
+          <summary data-i18n-tr>Hesabımı ve verilerimi nasıl silerim?</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>Inside the app, go to <strong>Settings</strong> → <strong>Delete Account</strong>. This permanently removes your account, dream history, and all generated content from our servers. This action cannot be undone. If you prefer, you can also email us and we'll process the deletion manually.</p>
+            <p data-i18n-tr>Uygulamanın içinde <strong>Ayarlar</strong> → <strong>Hesabı Sil</strong>'e gidin. Bu, hesabınızı, rüya geçmişinizi ve oluşturulan tüm içeriği sunucularımızdan kalıcı olarak kaldırır. Bu işlem geri alınamaz. Tercih ederseniz bize e-posta da gönderebilirsiniz, silme işlemini manuel olarak yaparız.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 6 — Content quality -->
+        <details class="faq-item">
+          <summary data-i18n-en>The generated image doesn't match my dream. Why?</summary>
+          <summary data-i18n-tr>Oluşturulan görsel rüyama uymuyor. Neden?</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>AI image generation works best with vivid, sensory details — colors, textures, the mood, where you are, who's there. Short prompts ("a weird dream") give the model very little to work with. Try describing one specific scene with more detail. You can also regenerate if the first result doesn't feel right.</p>
+            <p data-i18n-tr>Yapay zeka görsel üretimi, canlı ve duyusal detaylarla en iyi sonucu verir — renkler, dokular, atmosfer, nerede olduğunuz, kimin olduğu. Kısa prompt'lar ("garip bir rüya") modele çalışacak çok az şey bırakır. Tek bir belirli sahneyi daha fazla detayla tanımlamayı deneyin. İlk sonuç doğru hissettirmezse yeniden oluşturabilirsiniz.</p>
+          </div>
+        </details>
+
+        <!-- FAQ 7 — Inappropriate content -->
+        <details class="faq-item">
+          <summary data-i18n-en>I got a message that my content was filtered</summary>
+          <summary data-i18n-tr>İçeriğimin filtrelendiğine dair bir mesaj aldım</summary>
+          <div class="faq-answer">
+            <p data-i18n-en>DreamVision uses automated content safety filters to prevent generation of sexually explicit, graphic, or harmful imagery. If your dream description triggers a filter, try rephrasing it in more symbolic or indirect terms. Filter decisions are automated and we cannot manually override them.</p>
+            <p data-i18n-tr>DreamVision, cinsel açıdan müstehcen, şiddet içeren veya zararlı görsellerin oluşturulmasını önlemek için otomatik içerik güvenlik filtreleri kullanır. Rüya açıklamanız bir filtreyi tetiklerse, daha sembolik veya dolaylı ifadelerle yeniden yazmayı deneyin. Filtre kararları otomatiktir ve manuel olarak geçersiz kılınamaz.</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ─── QUICK LINKS ─── -->
+    <section id="links">
+      <h2 class="section-title" data-i18n-en>Quick links</h2>
+      <h2 class="section-title" data-i18n-tr>Hızlı bağlantılar</h2>
+      <p class="section-subtitle" data-i18n-en>Apple-managed tools for purchases and privacy.</p>
+      <p class="section-subtitle" data-i18n-tr>Satın almalar ve gizlilik için Apple tarafından yönetilen araçlar.</p>
+
+      <div class="quick-links">
+        <a class="quick-link" href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener">
+          <div class="ql-label" data-i18n-en>Subscriptions</div>
+          <div class="ql-label" data-i18n-tr>Abonelikler</div>
+          <div class="ql-title" data-i18n-en>Manage your subscription</div>
+          <div class="ql-title" data-i18n-tr>Aboneliğinizi yönetin</div>
+          <div class="ql-desc" data-i18n-en>Cancel, switch plans, or view renewal dates.</div>
+          <div class="ql-desc" data-i18n-tr>İptal edin, plan değiştirin veya yenileme tarihlerini görün.</div>
+        </a>
+
+        <a class="quick-link" href="https://reportaproblem.apple.com" target="_blank" rel="noopener">
+          <div class="ql-label" data-i18n-en>Refunds</div>
+          <div class="ql-label" data-i18n-tr>İadeler</div>
+          <div class="ql-title" data-i18n-en>Request a refund</div>
+          <div class="ql-title" data-i18n-tr>İade talep edin</div>
+          <div class="ql-desc" data-i18n-en>Processed directly by Apple.</div>
+          <div class="ql-desc" data-i18n-tr>Doğrudan Apple tarafından işlenir.</div>
+        </a>
+
+        <a class="quick-link" href="https://sabricetin.github.io/privacy-policy/" target="_blank" rel="noopener">
+          <div class="ql-label" data-i18n-en>Privacy</div>
+          <div class="ql-label" data-i18n-tr>Gizlilik</div>
+          <div class="ql-title" data-i18n-en>Privacy Policy</div>
+          <div class="ql-title" data-i18n-tr>Gizlilik Politikası</div>
+          <div class="ql-desc" data-i18n-en>How we collect, use, and protect your data.</div>
+          <div class="ql-desc" data-i18n-tr>Verilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer>
+      <div class="footer-links">
+        <a href="mailto:supportdreamvisionapp@gmail.com" data-i18n-en>Contact</a>
+        <a href="mailto:supportdreamvisionapp@gmail.com" data-i18n-tr>İletişim</a>
+        <a href="https://sabricetin.github.io/privacy-policy/" target="_blank" rel="noopener" data-i18n-en>Privacy Policy</a>
+        <a href="https://sabricetin.github.io/privacy-policy/" target="_blank" rel="noopener" data-i18n-tr>Gizlilik Politikası</a>
+      </div>
+      <div class="footer-mark" data-i18n-en>DreamVision · Crafted with care</div>
+      <div class="footer-mark" data-i18n-tr>DreamVision · Özenle hazırlandı</div>
+    </footer>
+
+  </main>
+
+  <!-- ───────────────────────── Scripts ───────────────────────── -->
+  <script>
+    // ---- Starfield generation ----
+    (function generateStars() {
+      const container = document.getElementById('stars');
+      const count = 80;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.top  = Math.random() * 100 + 'vh';
+        s.style.animationDelay    = (Math.random() * 4).toFixed(2) + 's';
+        s.style.animationDuration = (3 + Math.random() * 3).toFixed(2) + 's';
+        const scale = 0.5 + Math.random() * 1.2;
+        s.style.transform = 'scale(' + scale + ')';
+        s.style.opacity   = (0.3 + Math.random() * 0.7).toFixed(2);
+        frag.appendChild(s);
+      }
+      container.appendChild(frag);
+    })();
+
+    // ---- Language toggle ----
+    (function languageToggle() {
+      const html = document.documentElement;
+      const buttons = document.querySelectorAll('[data-set-lang]');
+
+      // Load saved preference or detect browser
+      let saved = null;
+      try { saved = localStorage.getItem('dv-lang'); } catch (e) {}
+      const browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+      const initial = saved || browser;
+      setLang(initial);
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => setLang(btn.dataset.setLang));
+      });
+
+      function setLang(lang) {
+        html.setAttribute('data-lang', lang);
+        html.setAttribute('lang', lang);
+        document.title = lang === 'tr'
+          ? 'DreamVision — Destek'
+          : 'DreamVision — Support';
+        buttons.forEach(b => {
+          const active = b.dataset.setLang === lang;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        try { localStorage.setItem('dv-lang', lang); } catch (e) {}
+      }
+    })();
+  </script>
+
 </body>
 </html>

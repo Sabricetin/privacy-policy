@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0418" />
+  <title>DreamVision</title>
+  <meta name="description" content="DreamVision — AI-powered dream visualization." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ------------------------------------------------------------------
+       Design tokens — shared vocabulary with privacy / terms / support
+       ------------------------------------------------------------------ */
+    :root {
+      --bg-deep: #050210;
+      --bg-mid:  #0a0418;
+      --bg-veil: #140830;
+
+      --purple-700: #3a1875;
+      --purple-500: #6b3fc2;
+
+      --gold-600: #b8860b;
+      --gold-500: #d4a94f;
+      --gold-400: #e8c571;
+      --gold-300: #f4dea0;
+
+      --star-glow: rgba(232, 197, 113, 0.9);
+
+      --text-primary:   rgba(245, 235, 220, 0.96);
+      --text-secondary: rgba(220, 210, 200, 0.72);
+      --text-muted:     rgba(200, 190, 185, 0.50);
+
+      --glass-bg:     rgba(30, 15, 55, 0.30);
+      --glass-border: rgba(232, 197, 113, 0.15);
+      --glass-hover:  rgba(232, 197, 113, 0.40);
+
+      --display: "Cormorant Garamond", "Times New Roman", serif;
+      --body:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      color: var(--text-primary);
+      background: var(--bg-deep);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 48px 24px;
+    }
+
+    /* ------------------------------------------------------------------
+       Cosmic background
+       ------------------------------------------------------------------ */
+    .cosmos {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(ellipse 70% 50% at 30% 15%, rgba(107, 63, 194, 0.40), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 70%, rgba(184, 134, 11, 0.15), transparent 55%),
+        radial-gradient(ellipse 100% 60% at 50% 110%, rgba(58, 24, 117, 0.55), transparent 60%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 50%, var(--bg-veil) 100%);
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--star-glow);
+      border-radius: 50%;
+      box-shadow: 0 0 6px 1px var(--star-glow);
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50%      { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
+    }
+
+    /* ------------------------------------------------------------------
+       Hero
+       ------------------------------------------------------------------ */
+    .hero {
+      text-align: center;
+      margin-bottom: 64px;
+      max-width: 620px;
+      animation: fadeUp 1.1s ease-out;
+    }
+
+    .emblem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 88px;
+      height: 88px;
+      margin-bottom: 28px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--gold-400), var(--gold-600) 70%);
+      box-shadow:
+        0 0 50px rgba(232, 197, 113, 0.45),
+        inset 0 0 22px rgba(10, 4, 24, 0.3);
+      position: relative;
+      animation: breathe 4s ease-in-out infinite;
+    }
+
+    .emblem::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      opacity: 0.6;
+    }
+
+    .emblem::after {
+      content: "";
+      position: absolute;
+      inset: -24px;
+      border-radius: 50%;
+      border: 1px solid rgba(232, 197, 113, 0.08);
+    }
+
+    .emblem svg { width: 44px; height: 44px; color: var(--bg-deep); }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1);    box-shadow: 0 0 50px rgba(232, 197, 113, 0.45), inset 0 0 22px rgba(10, 4, 24, 0.3); }
+      50%      { transform: scale(1.04); box-shadow: 0 0 70px rgba(232, 197, 113, 0.65), inset 0 0 22px rgba(10, 4, 24, 0.3); }
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(3rem, 7vw, 4.8rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    h1 .vision {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold-300);
+    }
+
+    .tagline {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      font-style: italic;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+    }
+
+    .tagline::before,
+    .tagline::after {
+      content: "·";
+      color: var(--gold-400);
+      margin: 0 14px;
+      opacity: 0.7;
+    }
+
+    /* ------------------------------------------------------------------
+       Portals (navigation tiles)
+       ------------------------------------------------------------------ */
+    .portals {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+      max-width: 920px;
+      animation: fadeUp 1.2s ease-out 0.2s backwards;
+    }
+
+    @media (max-width: 760px) {
+      .portals { grid-template-columns: 1fr; gap: 14px; max-width: 460px; }
+    }
+
+    .portal {
+      position: relative;
+      display: block;
+      padding: 32px 28px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-decoration: none;
+      color: var(--text-primary);
+      overflow: hidden;
+      transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    /* Top shimmer line */
+    .portal::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 20%; right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Background glow on hover */
+    .portal::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 22px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232, 197, 113, 0.15), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .portal:hover {
+      transform: translateY(-4px);
+      border-color: var(--glass-hover);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .portal:hover::before { opacity: 0.8; }
+    .portal:hover::after  { opacity: 1; }
+
+    .portal-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(232, 197, 113, 0.08);
+      border: 1px solid rgba(232, 197, 113, 0.2);
+      margin-bottom: 20px;
+      color: var(--gold-300);
+      transition: all 0.4s ease;
+    }
+
+    .portal:hover .portal-icon {
+      background: rgba(232, 197, 113, 0.15);
+      border-color: rgba(232, 197, 113, 0.4);
+      transform: scale(1.08) rotate(-4deg);
+    }
+
+    .portal-icon svg { width: 20px; height: 20px; }
+
+    .portal-eyebrow {
+      font-family: var(--body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-400);
+      margin-bottom: 8px;
+      opacity: 0.85;
+    }
+
+    .portal-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .portal-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .portal-arrow {
+      font-family: var(--display);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--gold-400);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease, color 0.3s ease;
+    }
+
+    .portal-arrow svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .portal:hover .portal-arrow {
+      gap: 12px;
+      color: var(--gold-300);
+    }
+
+    .portal:hover .portal-arrow svg { transform: translateX(3px); }
+
+    /* ------------------------------------------------------------------
+       Footer
+       ------------------------------------------------------------------ */
+    footer {
+      margin-top: 72px;
+      text-align: center;
+      animation: fadeUp 1.2s ease-out 0.4s backwards;
+    }
+
+    .footer-mail {
+      font-family: var(--display);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .footer-mail a {
+      color: var(--gold-300);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232, 197, 113, 0.3);
+      transition: border-color 0.3s ease;
+    }
+
+    .footer-mail a:hover { border-bottom-color: var(--gold-300); }
+
+    .footer-mark {
+      font-family: var(--body);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .footer-mark::before,
+    .footer-mark::after {
+      content: "—";
+      color: var(--gold-600);
+      margin: 0 10px;
+      opacity: 0.5;
+    }
+
+    /* ------------------------------------------------------------------
+       Animations
+       ------------------------------------------------------------------ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .emblem, .stars span { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ───────────────────────── Cosmic background ───────────────────────── -->
+  <div class="cosmos" aria-hidden="true"></div>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <header class="hero">
+    <div class="emblem" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none" />
+      </svg>
+    </div>
+
+    <h1>Dream<span class="vision">Vision</span></h1>
+    <p class="tagline">Where dreams become vision</p>
+  </header>
+
+  <!-- ───────────────────────── Portals ───────────────────────── -->
+  <nav class="portals" aria-label="DreamVision resources">
+
+    <!-- Privacy Policy -->
+    <a class="portal" href="privacy-policy.html">
+      <span class="portal-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l8 4v6c0 5-3.5 9.2-8 10-4.5-.8-8-5-8-10V6l8-4z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </span>
+      <div class="portal-eyebrow">Document</div>
+      <div class="portal-title">Privacy Policy</div>
+      <div class="portal-desc">How we handle your data, your dreams, and your trust.</div>
+      <div class="portal-arrow">
+        Read
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- Terms & Conditions -->
+    <a class="portal" href="terms-conditions.html">
+      <span class="portal-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="8" y1="13" x2="16" y2="13"/>
+          <line x1="8" y1="17" x2="16" y2="17"/>
+        </svg>
+      </span>
+      <div class="portal-eyebrow">Document</div>
+      <div class="portal-title">Terms &amp; Conditions</div>
+      <div class="portal-desc">The agreement between you and DreamVision.</div>
+      <div class="portal-arrow">
+        Read
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- Support -->
+    <a class="portal" href="support.html">
+      <span class="portal-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2"/>
+          <circle cx="12" cy="17" r="0.6" fill="currentColor"/>
+        </svg>
+      </span>
+      <div class="portal-eyebrow">Assistance</div>
+      <div class="portal-title">Support</div>
+      <div class="portal-desc">Questions, answers, and direct access to our team.</div>
+      <div class="portal-arrow">
+        Visit
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </a>
+
+  </nav>
+
+  <!-- ───────────────────────── Footer ───────────────────────── -->
+  <footer>
+    <p class="footer-mail">
+      <a href="mailto:supportdreamvisionapp@gmail.com">supportdreamvisionapp@gmail.com</a>
+    </p>
+    <p class="footer-mark">DreamVision</p>
+  </footer>
+
+  <!-- ───────────────────────── Scripts ───────────────────────── -->
+  <script>
+    // Starfield
+    (function generateStars() {
+      const container = document.getElementById('stars');
+      const count = 70;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        s.style.left = Math.random() * 100 + 'vw';
+        s.style.top  = Math.random() * 100 + 'vh';
+        s.style.animationDelay    = (Math.random() * 4).toFixed(2) + 's';
+        s.style.animationDuration = (3 + Math.random() * 3).toFixed(2) + 's';
+        const scale = 0.5 + Math.random() * 1.2;
+        s.style.transform = 'scale(' + scale + ')';
+        s.style.opacity   = (0.3 + Math.random() * 0.7).toFixed(2);
+        frag.appendChild(s);
+      }
+      container.appendChild(frag);
+    })();
+  </script>
+
+</body>
+</html>
