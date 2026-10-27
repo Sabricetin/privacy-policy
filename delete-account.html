@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Delete Account — DreamVision</title>
   <meta name="description" content="How to delete your DreamVision account and data · DreamVision hesabını ve verilerini silme">
+  <script>
+    // İçerik çizilmeden önce dili seç (Türkçe cihazda İngilizce'nin bir an görünmemesi için)
+    (function () {
+      var h = location.hash.slice(1), s = null;
+      try { s = localStorage.getItem('dv-lang'); } catch (_) {}
+      var l = (h === 'en' || h === 'tr') ? h : (s === 'en' || s === 'tr') ? s
+        : ((navigator.language || '').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en');
+      document.documentElement.lang = l;
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -89,13 +99,17 @@
 
     @media(max-width:600px){ .section-inner{padding:24px 20px} header{padding:60px 0 40px} }
 
-    .lang-switch { display:inline-flex; gap:6px; margin-top:28px; }
-    .lang-switch a { font-size:12px; letter-spacing:.2em; padding:6px 14px; border:1px solid var(--border); border-radius:50px; }
+    .lang-switch { display:inline-flex; gap:4px; margin-top:28px; padding:4px; border:1px solid var(--border); border-radius:50px; background:var(--surface); }
+    .lang-switch button { font:inherit; font-size:12px; letter-spacing:.18em; padding:7px 18px; border:0; border-radius:50px; background:transparent; color:var(--text-muted); cursor:pointer; transition:background .25s,color .25s; }
+    .lang-switch button[aria-pressed="true"] { background:rgba(139,120,255,.22); color:var(--text-primary); box-shadow:0 0 16px rgba(139,120,255,.2); }
+    .lang-switch button:focus-visible { outline:2px solid var(--accent-soft); outline-offset:2px; }
+    [data-lang] { display:none; }
+    html[lang="en"] [data-lang="en"], html[lang="tr"] [data-lang="tr"] { display:block; }
+    html[lang="en"] span[data-lang="en"], html[lang="tr"] span[data-lang="tr"] { display:inline; }
     .step-list { counter-reset: step; list-style:none; padding:0; margin:14px 0; }
     .step-list li { counter-increment: step; position:relative; padding-left:40px; margin-bottom:12px; }
     .step-list li::before { content: counter(step); position:absolute; left:0; top:1px; width:26px; height:26px; border-radius:50%; background:rgba(139,120,255,.15); border:1px solid var(--border-glow); color:var(--accent-soft); font-size:12px; display:flex; align-items:center; justify-content:center; }
     strong { color:var(--text-primary); font-weight:500; }
-    .lang-divider { text-align:center; margin:56px 0 40px; font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--text-primary); }
   </style>
 </head>
 <body>
@@ -113,17 +127,19 @@
   <div class="logo-mark">
     <span class="logo-text">DreamVision</span>
   </div>
-  <p class="header-eyebrow">Account &amp; Data</p>
-  <h1>Delete your<br><em>account</em></h1>
-  <p class="header-date">Last updated October 28, 2026</p>
-  <div class="lang-switch"><a href="#en">English</a><a href="#tr">Türkçe</a></div>
+  <p class="header-eyebrow"><span data-lang="en">Account &amp; Data</span><span data-lang="tr">Hesap ve Veriler</span></p>
+  <h1 data-lang="en">Delete your<br><em>account</em></h1>
+  <h1 data-lang="tr">Hesabını<br><em>sil</em></h1>
+  <p class="header-date"><span data-lang="en">Last updated October 28, 2026</span><span data-lang="tr">Son güncelleme: 28 Ekim 2026</span></p>
+  <div class="lang-switch" role="group" aria-label="Language / Dil">
+    <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+    <button type="button" data-set-lang="tr" aria-pressed="false">Türkçe</button>
+  </div>
   <span class="header-line"></span>
 </header>
 
-<div class="container">
-
-  <!-- ───────────────────────── ENGLISH ───────────────────────── -->
-  <div id="en"></div>
+<!-- ───────────────────────── ENGLISH ───────────────────────── -->
+<div class="container" data-lang="en">
 
   <div class="section">
     <div class="section-inner">
@@ -169,15 +185,26 @@
       <ul>
         <li><strong>Purchase records</strong> (order number, product, number of credits, date and your user ID): kept as long as required for tax and accounting obligations, refunds and fraud prevention.</li>
         <li><strong>Abuse-prevention record</strong> (whether a welcome bonus was given and how many free creations were used, without any content): kept so that free credits cannot be claimed repeatedly.</li>
-        <li><strong>Video creation records</strong> (which include the dream text sent for a video): deleted automatically <strong>7 days</strong> after creation.</li>
+        <li><strong>Video creation records</strong> (temporary records used to show progress while a video is being made; they include the dream text sent for the video): deleted automatically <strong>7 days</strong> after creation. Your saved videos are not affected.</li>
         <li><strong>Purchase profile at our payment provider</strong> (Adapty): deleted on request by email.</li>
         <li><strong>Crash reports</strong> (Firebase Crashlytics): deleted automatically by Google after 90 days.</li>
       </ul>
     </div>
   </div>
 
-  <!-- ───────────────────────── TÜRKÇE ───────────────────────── -->
-  <div id="tr" class="lang-divider">Türkçe</div>
+  <div class="section">
+    <div class="contact-card">
+      <h2>Contact</h2>
+      <p>Questions about your data? Write to us:</p>
+      <a href="mailto:supportdreamvisionapp@gmail.com" class="email-badge">supportdreamvisionapp@gmail.com</a>
+      <p style="margin-top:20px"><a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-conditions.html">Terms of Use</a></p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ───────────────────────── TÜRKÇE ───────────────────────── -->
+<div class="container" data-lang="tr">
 
   <div class="section">
     <div class="section-inner">
@@ -223,7 +250,7 @@
       <ul>
         <li><strong>Satın alma kayıtları</strong> (sipariş numarası, ürün, kredi miktarı, tarih ve kullanıcı kimliğin): vergi ve muhasebe yükümlülükleri, iadeler ve dolandırıcılığı önleme için gerektiği süre boyunca saklanır.</li>
         <li><strong>Kötüye kullanımı önleme kaydı</strong> (hoş geldin bonusunun verilip verilmediği ve kaç ücretsiz üretim yapıldığı; içerik yok): ücretsiz kredinin tekrar tekrar alınmaması için saklanır.</li>
-        <li><strong>Video oluşturma kayıtları</strong> (video için gönderilen rüya metnini içerir): oluşturulduktan <strong>7 gün</strong> sonra otomatik silinir.</li>
+        <li><strong>Video oluşturma kayıtları</strong> (video hazırlanırken ilerlemeyi göstermek için tutulan geçici kayıtlar; video için gönderilen rüya metnini içerir): oluşturulduktan <strong>7 gün</strong> sonra otomatik silinir. Kaydettiğin videolar bundan etkilenmez.</li>
         <li><strong>Ödeme altyapımızdaki satın alma profili</strong> (Adapty): e-postayla talep edilirse silinir.</li>
         <li><strong>Çökme raporları</strong> (Firebase Crashlytics): Google tarafından 90 gün sonra otomatik silinir.</li>
       </ul>
@@ -232,10 +259,10 @@
 
   <div class="section">
     <div class="contact-card">
-      <h2>Contact · İletişim</h2>
-      <p>Questions about your data? · Verilerinle ilgili soruların için:</p>
+      <h2>İletişim</h2>
+      <p>Verilerinle ilgili soruların için bize yaz:</p>
       <a href="mailto:supportdreamvisionapp@gmail.com" class="email-badge">supportdreamvisionapp@gmail.com</a>
-      <p style="margin-top:20px"><a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-conditions.html">Terms of Use</a></p>
+      <p style="margin-top:20px"><a href="privacy-policy.html">Gizlilik Politikası</a> · <a href="terms-conditions.html">Kullanım Şartları</a></p>
     </div>
   </div>
 
@@ -247,6 +274,36 @@
 </footer>
 
 <script>
+  // Dil: adresteki #tr / #en > son seçim > cihaz dili (Türkçe ise tr) > en
+  (function () {
+    const supported = ['en', 'tr'];
+    const titles = { en: 'Delete Account — DreamVision', tr: 'Hesabı Sil — DreamVision' };
+    function stored() { try { return localStorage.getItem('dv-lang'); } catch (_) { return null; } }
+    function initial() {
+      const fromHash = location.hash.replace('#', '');
+      if (supported.includes(fromHash)) return fromHash;
+      const s = stored();
+      if (supported.includes(s)) return s;
+      return (navigator.language || '').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+    }
+    function apply(lang, persist) {
+      document.documentElement.lang = lang;
+      document.title = titles[lang];
+      document.querySelectorAll('[data-set-lang]').forEach(b =>
+        b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
+      if (persist) {
+        try { localStorage.setItem('dv-lang', lang); } catch (_) {}
+        history.replaceState(null, '', '#' + lang);
+      }
+    }
+    document.querySelectorAll('[data-set-lang]').forEach(b =>
+      b.addEventListener('click', () => apply(b.dataset.setLang, true)));
+    window.addEventListener('hashchange', () => {
+      const h = location.hash.replace('#', '');
+      if (supported.includes(h)) apply(h, false);
+    });
+    apply(initial(), false);
+  })();
   const canvas = document.getElementById('stars');
   const ctx = canvas.getContext('2d');
   function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
