@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Delete Account — DreamVision</title>
   <meta name="description" content="How to delete your DreamVision account and data · DreamVision hesabını ve verilerini silme">
+  <link rel="alternate" hreflang="en" href="https://sabricetin.github.io/privacy-policy/delete-account.html">
+  <link rel="alternate" hreflang="tr" href="https://sabricetin.github.io/privacy-policy/delete-account-tr.html">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -89,17 +91,22 @@
 
     @media(max-width:600px){ .section-inner{padding:24px 20px} header{padding:60px 0 40px} }
 
-    .lang-switch { display:inline-flex; gap:6px; margin-top:28px; }
-    .lang-switch a { font-size:12px; letter-spacing:.2em; padding:6px 14px; border:1px solid var(--border); border-radius:50px; }
     .step-list { counter-reset: step; list-style:none; padding:0; margin:14px 0; }
     .step-list li { counter-increment: step; position:relative; padding-left:40px; margin-bottom:12px; }
     .step-list li::before { content: counter(step); position:absolute; left:0; top:1px; width:26px; height:26px; border-radius:50%; background:rgba(139,120,255,.15); border:1px solid var(--border-glow); color:var(--accent-soft); font-size:12px; display:flex; align-items:center; justify-content:center; }
+    .lang-toggle { position:fixed; top:16px; right:16px; z-index:50; display:inline-flex; padding:3px; border:1px solid var(--border-glow); border-radius:50px; background:rgba(5,8,16,.75); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+    .lang-toggle a { border:0; font-size:12px; letter-spacing:.15em; padding:6px 14px; border-radius:50px; color:var(--text-muted); }
+    .lang-toggle a.active { background:rgba(139,120,255,.25); color:var(--text-primary); pointer-events:none; }
+    .lang-toggle a:not(.active):hover { color:#fff; }
     strong { color:var(--text-primary); font-weight:500; }
-    .lang-divider { text-align:center; margin:56px 0 40px; font-family:'Cormorant Garamond',serif; font-size:28px; font-style:italic; color:var(--text-primary); }
   </style>
 </head>
 <body>
 
+<nav class="lang-toggle" aria-label="Language / Dil">
+  <a href="delete-account.html" hreflang="en" class="active" aria-current="page">EN</a>
+  <a href="delete-account-tr.html" hreflang="tr" class="">TR</a>
+</nav>
 <div class="scroll-progress" id="scrollProgress"></div>
 <div id="cosmos">
   <canvas id="stars"></canvas>
@@ -116,14 +123,10 @@
   <p class="header-eyebrow">Account &amp; Data</p>
   <h1>Delete your<br><em>account</em></h1>
   <p class="header-date">Last updated October 28, 2026</p>
-  <div class="lang-switch"><a href="#en">English</a><a href="#tr">Türkçe</a></div>
   <span class="header-line"></span>
 </header>
 
 <div class="container">
-
-  <!-- ───────────────────────── ENGLISH ───────────────────────── -->
-  <div id="en"></div>
 
   <div class="section">
     <div class="section-inner">
@@ -169,71 +172,17 @@
       <ul>
         <li><strong>Purchase records</strong> (order number, product, number of credits, date and your user ID): kept as long as required for tax and accounting obligations, refunds and fraud prevention.</li>
         <li><strong>Abuse-prevention record</strong> (whether a welcome bonus was given and how many free creations were used, without any content): kept so that free credits cannot be claimed repeatedly.</li>
-        <li><strong>Video creation records</strong> (which include the dream text sent for a video): deleted automatically <strong>7 days</strong> after creation.</li>
+        <li><strong>Video creation records</strong> (temporary records used to show progress while a video is being made; they include the dream text sent for the video): deleted automatically <strong>7 days</strong> after creation. Your saved videos are not affected.</li>
         <li><strong>Purchase profile at our payment provider</strong> (Adapty): deleted on request by email.</li>
         <li><strong>Crash reports</strong> (Firebase Crashlytics): deleted automatically by Google after 90 days.</li>
       </ul>
     </div>
   </div>
 
-  <!-- ───────────────────────── TÜRKÇE ───────────────────────── -->
-  <div id="tr" class="lang-divider">Türkçe</div>
-
-  <div class="section">
-    <div class="section-inner">
-      <p>Bu sayfa <strong>DreamVision</strong> uygulamasındaki (Android paketi <code>com.sabricetin.dreamvision</code>, geliştirici <strong>Sabri ÇETİN</strong>) hesabını nasıl sileceğini ve verilerine ne olacağını açıklar.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-inner">
-      <h2>Uygulamadan sil</h2>
-      <ol class="step-list">
-        <li>DreamVision'ı aç ve giriş yap.</li>
-        <li><strong>Ayarlar</strong>'a git.</li>
-        <li><strong>Hesabı Sil</strong>'e dokun ve onayla.</li>
-      </ol>
-      <p>Hesabın ve verilerin aşağıda anlatıldığı şekilde hemen silinir.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-inner">
-      <h2>E-postayla sil</h2>
-      <p>Uygulama artık telefonunda yüklü değilse, <strong>hesabına kayıtlı e-posta adresinden</strong> “DreamVision hesabımı sil” konusuyla <a href="mailto:supportdreamvisionapp@gmail.com?subject=DreamVision%20hesab%C4%B1m%C4%B1%20sil">supportdreamvisionapp@gmail.com</a> adresine yaz. Hesabını <strong>30 gün</strong> içinde siler ve e-postayla bildiririz.</p>
-      <p>DreamVision'ı hesap açmadan (misafir olarak) kullandıysan rüyaların kaydedilmedi. Tek kayıt, adınla veya e-postanla ilişkili olmayan anonim bir kredi bakiyesidir.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-inner">
-      <h2>Neler silinir</h2>
-      <ul>
-        <li>Hesabın (e-posta adresi, görünen ad, giriş bilgisi)</li>
-        <li>Tüm rüya görsellerin ve videoların, yazdığın rüya metinleri</li>
-        <li>Kredi bakiyen ve işlem geçmişin</li>
-      </ul>
-      <p>Hesap silindiğinde kalan krediler kaybolur; iade edilemez ve geri getirilemez.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-inner">
-      <h2>Neler, ne kadar saklanır</h2>
-      <ul>
-        <li><strong>Satın alma kayıtları</strong> (sipariş numarası, ürün, kredi miktarı, tarih ve kullanıcı kimliğin): vergi ve muhasebe yükümlülükleri, iadeler ve dolandırıcılığı önleme için gerektiği süre boyunca saklanır.</li>
-        <li><strong>Kötüye kullanımı önleme kaydı</strong> (hoş geldin bonusunun verilip verilmediği ve kaç ücretsiz üretim yapıldığı; içerik yok): ücretsiz kredinin tekrar tekrar alınmaması için saklanır.</li>
-        <li><strong>Video oluşturma kayıtları</strong> (video için gönderilen rüya metnini içerir): oluşturulduktan <strong>7 gün</strong> sonra otomatik silinir.</li>
-        <li><strong>Ödeme altyapımızdaki satın alma profili</strong> (Adapty): e-postayla talep edilirse silinir.</li>
-        <li><strong>Çökme raporları</strong> (Firebase Crashlytics): Google tarafından 90 gün sonra otomatik silinir.</li>
-      </ul>
-    </div>
-  </div>
-
   <div class="section">
     <div class="contact-card">
-      <h2>Contact · İletişim</h2>
-      <p>Questions about your data? · Verilerinle ilgili soruların için:</p>
+      <h2>Contact</h2>
+      <p>Questions about your data? Write to us:</p>
       <a href="mailto:supportdreamvisionapp@gmail.com" class="email-badge">supportdreamvisionapp@gmail.com</a>
       <p style="margin-top:20px"><a href="privacy-policy.html">Privacy Policy</a> · <a href="terms-conditions.html">Terms of Use</a></p>
     </div>

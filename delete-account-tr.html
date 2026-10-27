@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hesabı Sil — DreamVision</title>
+  <meta name="description" content="How to delete your DreamVision account and data · DreamVision hesabını ve verilerini silme">
+  <link rel="alternate" hreflang="en" href="https://sabricetin.github.io/privacy-policy/delete-account.html">
+  <link rel="alternate" hreflang="tr" href="https://sabricetin.github.io/privacy-policy/delete-account-tr.html">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep:      #050810;
+      --surface:      rgba(255,255,255,0.04);
+      --border:       rgba(139,120,255,0.15);
+      --border-glow:  rgba(139,120,255,0.35);
+      --accent:       #8b78ff;
+      --accent-soft:  #c3b8ff;
+      --gold:         #d4af6e;
+      --text-primary: rgba(255,255,255,0.92);
+      --text-body:    rgba(220,215,245,0.72);
+      --text-muted:   rgba(180,170,220,0.45);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg-deep); color: var(--text-body); line-height: 1.8; font-size: 15px; font-weight: 300; overflow-x: hidden; }
+
+    #cosmos { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .nebula { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0; animation: nebulaFloat 18s ease-in-out infinite; }
+    .nebula-1 { width:600px; height:600px; background:radial-gradient(circle,rgba(100,60,220,.25) 0%,transparent 70%); top:-200px; left:-100px; animation-delay:0s; }
+    .nebula-2 { width:500px; height:500px; background:radial-gradient(circle,rgba(60,100,200,.2) 0%,transparent 70%); top:40%; right:-150px; animation-delay:-6s; }
+    .nebula-3 { width:400px; height:400px; background:radial-gradient(circle,rgba(180,100,220,.15) 0%,transparent 70%); bottom:-100px; left:30%; animation-delay:-12s; }
+    @keyframes nebulaFloat { 0%,100%{opacity:.6;transform:scale(1) translateY(0)} 50%{opacity:1;transform:scale(1.1) translateY(-30px)} }
+    canvas#stars { position:absolute; inset:0; opacity:.6; }
+    .grid-lines { position:fixed; inset:0; pointer-events:none; z-index:0; background-image:linear-gradient(rgba(139,120,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,120,255,.04) 1px,transparent 1px); background-size:60px 60px; }
+
+    .container { position:relative; z-index:2; max-width:760px; margin:0 auto; padding:0 24px 100px; }
+
+    header { position:relative; z-index:2; text-align:center; padding:80px 0 60px; }
+    .logo-mark { display:inline-flex; align-items:center; gap:10px; margin-bottom:40px; }
+    .logo-icon { width:38px; height:38px; }
+    .logo-icon svg { width:100%; height:100%; filter:drop-shadow(0 0 10px rgba(139,120,255,.8)); }
+    .logo-text { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; letter-spacing:.15em; color:var(--text-primary); }
+    .header-eyebrow { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--accent-soft); opacity:.7; margin-bottom:16px; }
+    header h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,7vw,58px); font-weight:300; font-style:italic; color:var(--text-primary); line-height:1.1; margin-bottom:20px; }
+    header h1 em { font-style:normal; background:linear-gradient(135deg,var(--accent-soft) 0%,var(--gold) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .header-date { font-size:12px; letter-spacing:.12em; color:var(--text-muted); }
+    .header-line { display:block; width:1px; height:60px; background:linear-gradient(to bottom,transparent,var(--accent),transparent); margin:32px auto 0; }
+
+    .section { margin-bottom:2px; opacity:0; transform:translateY(24px); animation:fadeUp .7s ease forwards; }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .section:nth-child(1){animation-delay:.08s} .section:nth-child(2){animation-delay:.15s}
+    .section:nth-child(3){animation-delay:.22s} .section:nth-child(4){animation-delay:.29s}
+    .section:nth-child(5){animation-delay:.36s} .section:nth-child(6){animation-delay:.43s}
+    .section:nth-child(7){animation-delay:.50s} .section:nth-child(8){animation-delay:.57s}
+    .section:nth-child(9){animation-delay:.64s} .section:nth-child(10){animation-delay:.71s}
+    .section:nth-child(11){animation-delay:.78s}
+
+    .section-inner { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px 40px; margin-bottom:12px; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); transition:border-color .4s,box-shadow .4s; }
+    .section-inner:hover { border-color:var(--border-glow); box-shadow:0 0 40px rgba(139,120,255,.08),inset 0 0 40px rgba(139,120,255,.03); }
+
+    h2 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:var(--text-primary); letter-spacing:.02em; margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+    h2::before { content:''; display:block; width:3px; height:20px; background:linear-gradient(to bottom,var(--accent),var(--gold)); border-radius:2px; flex-shrink:0; }
+
+    p { color:var(--text-body); margin-bottom:14px; }
+    p:last-child { margin-bottom:0; }
+
+    ul { list-style:none; padding:0; margin:14px 0; }
+    ul li { position:relative; padding-left:20px; margin-bottom:10px; color:var(--text-body); }
+    ul li::before { content:''; position:absolute; left:0; top:10px; width:5px; height:5px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent); }
+
+    a { color:var(--accent-soft); text-decoration:none; border-bottom:1px solid rgba(195,184,255,.3); transition:color .2s,border-color .2s; }
+    a:hover { color:#fff; border-color:rgba(255,255,255,.6); }
+
+    .provider-list { display:flex; flex-direction:column; gap:8px; margin-top:16px; }
+    .provider-pill { display:flex; align-items:center; gap:12px; background:rgba(139,120,255,.06); border:1px solid rgba(139,120,255,.18); border-radius:10px; padding:12px 18px; text-decoration:none; border-bottom:1px solid rgba(139,120,255,.18); transition:background .3s,border-color .3s,transform .2s; color:var(--accent-soft); font-size:14px; }
+    .provider-pill:hover { background:rgba(139,120,255,.12); border-color:var(--accent); transform:translateX(4px); color:#fff; }
+    .provider-pill .pill-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); flex-shrink:0; }
+    .provider-pill .pill-arrow { margin-left:auto; opacity:.4; font-size:12px; }
+
+    .contact-card { background:linear-gradient(135deg,rgba(139,120,255,.1),rgba(100,60,220,.05)); border:1px solid var(--border-glow); border-radius:16px; padding:36px 40px; text-align:center; margin-top:32px; }
+    .contact-card h2 { justify-content:center; }
+    .contact-card h2::before { display:none; }
+    .email-badge { display:inline-flex; align-items:center; gap:10px; background:rgba(139,120,255,.12); border:1px solid var(--border-glow); border-radius:50px; padding:12px 24px; margin-top:16px; color:var(--accent-soft); font-size:14px; letter-spacing:.04em; text-decoration:none; border-bottom:1px solid var(--border-glow); transition:all .3s; }
+    .email-badge:hover { background:rgba(139,120,255,.22); color:#fff; box-shadow:0 0 24px rgba(139,120,255,.25); transform:translateY(-2px); }
+
+    footer { position:relative; z-index:2; text-align:center; padding:40px 0 20px; font-size:12px; color:var(--text-muted); letter-spacing:.06em; }
+    .footer-divider { width:80px; height:1px; background:linear-gradient(to right,transparent,var(--border-glow),transparent); margin:0 auto 20px; }
+
+    .scroll-progress { position:fixed; top:0; left:0; height:2px; background:linear-gradient(to right,var(--accent),var(--gold)); width:0%; z-index:100; transition:width .1s linear; box-shadow:0 0 8px var(--accent); }
+
+    @media(max-width:600px){ .section-inner{padding:24px 20px} header{padding:60px 0 40px} }
+
+    .step-list { counter-reset: step; list-style:none; padding:0; margin:14px 0; }
+    .step-list li { counter-increment: step; position:relative; padding-left:40px; margin-bottom:12px; }
+    .step-list li::before { content: counter(step); position:absolute; left:0; top:1px; width:26px; height:26px; border-radius:50%; background:rgba(139,120,255,.15); border:1px solid var(--border-glow); color:var(--accent-soft); font-size:12px; display:flex; align-items:center; justify-content:center; }
+    .lang-toggle { position:fixed; top:16px; right:16px; z-index:50; display:inline-flex; padding:3px; border:1px solid var(--border-glow); border-radius:50px; background:rgba(5,8,16,.75); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+    .lang-toggle a { border:0; font-size:12px; letter-spacing:.15em; padding:6px 14px; border-radius:50px; color:var(--text-muted); }
+    .lang-toggle a.active { background:rgba(139,120,255,.25); color:var(--text-primary); pointer-events:none; }
+    .lang-toggle a:not(.active):hover { color:#fff; }
+    strong { color:var(--text-primary); font-weight:500; }
+  </style>
+</head>
+<body>
+
+<nav class="lang-toggle" aria-label="Language / Dil">
+  <a href="delete-account.html" hreflang="en" class="">EN</a>
+  <a href="delete-account-tr.html" hreflang="tr" class="active" aria-current="page">TR</a>
+</nav>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div id="cosmos">
+  <canvas id="stars"></canvas>
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+</div>
+<div class="grid-lines"></div>
+
+<header>
+  <div class="logo-mark">
+    <span class="logo-text">DreamVision</span>
+  </div>
+  <p class="header-eyebrow">Hesap ve Veriler</p>
+  <h1>Hesabını<br><em>sil</em></h1>
+  <p class="header-date">Son güncelleme: 28 Ekim 2026</p>
+  <span class="header-line"></span>
+</header>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-inner">
+      <p>Bu sayfa <strong>DreamVision</strong> uygulamasındaki (Android paketi <code>com.sabricetin.dreamvision</code>, geliştirici <strong>Sabri ÇETİN</strong>) hesabını nasıl sileceğini ve verilerine ne olacağını açıklar.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <h2>Uygulamadan sil</h2>
+      <ol class="step-list">
+        <li>DreamVision'ı aç ve giriş yap.</li>
+        <li><strong>Ayarlar</strong>'a git.</li>
+        <li><strong>Hesabı Sil</strong>'e dokun ve onayla.</li>
+      </ol>
+      <p>Hesabın ve verilerin aşağıda anlatıldığı şekilde hemen silinir.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <h2>E-postayla sil</h2>
+      <p>Uygulama artık telefonunda yüklü değilse, <strong>hesabına kayıtlı e-posta adresinden</strong> “DreamVision hesabımı sil” konusuyla <a href="mailto:supportdreamvisionapp@gmail.com?subject=DreamVision%20hesab%C4%B1m%C4%B1%20sil">supportdreamvisionapp@gmail.com</a> adresine yaz. Hesabını <strong>30 gün</strong> içinde siler ve e-postayla bildiririz.</p>
+      <p>DreamVision'ı hesap açmadan (misafir olarak) kullandıysan rüyaların kaydedilmedi. Tek kayıt, adınla veya e-postanla ilişkili olmayan anonim bir kredi bakiyesidir.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <h2>Neler silinir</h2>
+      <ul>
+        <li>Hesabın (e-posta adresi, görünen ad, giriş bilgisi)</li>
+        <li>Tüm rüya görsellerin ve videoların, yazdığın rüya metinleri</li>
+        <li>Kredi bakiyen ve işlem geçmişin</li>
+      </ul>
+      <p>Hesap silindiğinde kalan krediler kaybolur; iade edilemez ve geri getirilemez.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-inner">
+      <h2>Neler, ne kadar saklanır</h2>
+      <ul>
+        <li><strong>Satın alma kayıtları</strong> (sipariş numarası, ürün, kredi miktarı, tarih ve kullanıcı kimliğin): vergi ve muhasebe yükümlülükleri, iadeler ve dolandırıcılığı önleme için gerektiği süre boyunca saklanır.</li>
+        <li><strong>Kötüye kullanımı önleme kaydı</strong> (hoş geldin bonusunun verilip verilmediği ve kaç ücretsiz üretim yapıldığı; içerik yok): ücretsiz kredinin tekrar tekrar alınmaması için saklanır.</li>
+        <li><strong>Video oluşturma kayıtları</strong> (video hazırlanırken ilerlemeyi göstermek için tutulan geçici kayıtlar; video için gönderilen rüya metnini içerir): oluşturulduktan <strong>7 gün</strong> sonra otomatik silinir. Kaydettiğin videolar bundan etkilenmez.</li>
+        <li><strong>Ödeme altyapımızdaki satın alma profili</strong> (Adapty): e-postayla talep edilirse silinir.</li>
+        <li><strong>Çökme raporları</strong> (Firebase Crashlytics): Google tarafından 90 gün sonra otomatik silinir.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-card">
+      <h2>İletişim</h2>
+      <p>Verilerinle ilgili soruların için bize yaz:</p>
+      <a href="mailto:supportdreamvisionapp@gmail.com" class="email-badge">supportdreamvisionapp@gmail.com</a>
+      <p style="margin-top:20px"><a href="privacy-policy.html">Gizlilik Politikası</a> · <a href="terms-conditions.html">Kullanım Şartları</a></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-divider"></div>
+  <p>© 2026 DreamVision · Sabri ÇETİN</p>
+</footer>
+
+<script>
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const stars = Array.from({length:160},()=>({
+    x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
+    r:Math.random()*1.2+0.2, a:Math.random(),
+    speed:Math.random()*0.005+0.002, phase:Math.random()*Math.PI*2
+  }));
+  function draw(t){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(s=>{
+      const alpha=s.a*(0.5+0.5*Math.sin(t*s.speed+s.phase));
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,190,255,${alpha})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw(0);
+  window.addEventListener('scroll',()=>{
+    const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+    document.getElementById('scrollProgress').style.width=pct+'%';
+  });
+</script>
+</body>
+</html>
