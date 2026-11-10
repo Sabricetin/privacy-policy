@@ -261,7 +261,7 @@ PRIVACY_EN = f"""
   <li><a href="#who">Data Controller</a></li><li><a href="#collect">Information Collected</a></li>
   <li><a href="#use">Purposes of Use</a></li><li><a href="#ai">AI Processing</a></li>
   <li><a href="#share">Service Providers</a></li><li><a href="#keep">Retention</a></li>
-  <li><a href="#rights">Your Rights</a></li><li><a href="#children">Children's Privacy</a></li>
+  <li><a href="#rights">Your Rights</a></li><li><a href="#children">Minors' Privacy</a></li>
 </ul>
 
 <section class="card" id="who">
@@ -351,8 +351,8 @@ PRIVACY_EN = f"""
 </section>
 
 <section class="card" id="children">
-  <h2>Children's Privacy</h2>
-  <p>DreamVision is not directed at children under the age of 13, and we do not knowingly collect personal data from them. If you believe a child under 13 has provided us with information, please contact us and the data will be deleted.</p>
+  <h2>Minors' Privacy</h2>
+  <p>DreamVision is intended for users aged 18 and over. It is not directed at minors, and we do not knowingly collect personal data from anyone under 18. If you believe a minor has provided us with information, please contact us and the data will be deleted.</p>
 </section>
 
 <section class="card">
@@ -381,7 +381,7 @@ PRIVACY_TR = f"""
   <li><a href="#who">Veri Sorumlusu</a></li><li><a href="#collect">Toplanan Bilgiler</a></li>
   <li><a href="#use">Kullanım Amaçları</a></li><li><a href="#ai">Yapay Zekâ</a></li>
   <li><a href="#share">Hizmet Sağlayıcılar</a></li><li><a href="#keep">Saklama Süreleri</a></li>
-  <li><a href="#rights">Haklarınız</a></li><li><a href="#children">Çocukların Gizliliği</a></li>
+  <li><a href="#rights">Haklarınız</a></li><li><a href="#children">Reşit Olmayanlar</a></li>
 </ul>
 
 <section class="card" id="who">
@@ -471,8 +471,8 @@ PRIVACY_TR = f"""
 </section>
 
 <section class="card" id="children">
-  <h2>Çocukların Gizliliği</h2>
-  <p>DreamVision 13 yaşından küçüklere yönelik değildir ve bu yaş grubuna ait veriler bilerek toplanmaz. Böyle bir durumun tespiti hâlinde bizimle iletişime geçiniz; ilgili veriler silinir.</p>
+  <h2>Reşit Olmayanların Gizliliği</h2>
+  <p>DreamVision 18 yaş ve üzeri kullanıcılara yöneliktir. 18 yaşından küçüklere ait veriler bilerek toplanmaz. Böyle bir durumun tespiti hâlinde bizimle iletişime geçiniz; ilgili veriler silinir.</p>
 </section>
 
 <section class="card">
@@ -502,7 +502,7 @@ TERMS_EN = f"""
   <h2>2. User Accounts</h2>
   <ul>
     <li>The app may be used as a guest or with a free account (email or Google).</li>
-    <li>You must be at least 13 years of age to use DreamVision.</li>
+    <li>You must be at least 18 years of age to use DreamVision.</li>
     <li>You are responsible for maintaining the security of your account and device.</li>
   </ul>
 </section>
@@ -605,7 +605,7 @@ TERMS_TR = f"""
   <h2>2. Kullanıcı Hesabı</h2>
   <ul>
     <li>Uygulama misafir olarak veya ücretsiz bir hesapla (e-posta ya da Google) kullanılabilir.</li>
-    <li>DreamVision'ı kullanabilmek için en az 13 yaşında olmanız gerekir.</li>
+    <li>DreamVision'ı kullanabilmek için en az 18 yaşında olmanız gerekir.</li>
     <li>Hesap ve cihaz güvenliğinin sağlanması kullanıcının sorumluluğundadır.</li>
   </ul>
 </section>
